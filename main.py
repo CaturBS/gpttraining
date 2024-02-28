@@ -42,7 +42,7 @@ def make_query():
 
 
 if __name__ == '__main__':
-    os.environ["OPENAI_API_KEY"] = "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"
+    os.environ["OPENAI_API_KEY"] = "{value of openapikey}"
     app.secret_key = 'ssisdhid'
     app.config['SESSION_TYPE'] = 'filesystem'
     Session(app)
