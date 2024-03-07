@@ -20,8 +20,6 @@ def __init_index(directory_path):
 
 
 
-
-@app.route('/send_conversation', methods=['POST'])
 def make_query(text:str):
     docpath = os.path.join(os.getcwd(), "docs")
     vec_index = __init_index(docpath)
@@ -39,6 +37,6 @@ if __name__ == '__main__':
                          title="Chat-chatan test",
                          description="Chat tentang 'fifth discipline'",
                          )
-    iface.launch(share=True)
+    iface.launch(share=False, server_port=5000)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
