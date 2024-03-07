@@ -1,9 +1,7 @@
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, StorageContext, load_index_from_storage
-from flask import Flask, session, request, render_template
-from flask_session import Session
-import os
 
-app = Flask(__name__)
+import os
+import gradio as gr
 
 
 def __init_index(directory_path):
@@ -21,31 +19,26 @@ def __init_index(directory_path):
     return result
 
 
-@app.route('/')
-def index():
-    return render_template('index.html')
 
 
 @app.route('/send_conversation', methods=['POST'])
-def make_query():
-    if 'vec_index' in session:
-        vec_index = session['vec_index']
-    else:
-        docpath = os.path.join(os.getcwd(), "docs")
-        vec_index = __init_index(docpath)
-        session['vec_index'] = vec_index
-    text = request.form['text_qry']
+def make_query(text:str):
+    docpath = os.path.join(os.getcwd(), "docs")
+    vec_index = __init_index(docpath)
     query_engine = vec_index.as_query_engine()
     response = query_engine.query(text)
-
+    print(response)
     return str(response)
 
 
 if __name__ == '__main__':
-    os.environ["OPENAI_API_KEY"] = "{value of openapikey}"
-    app.secret_key = 'ssisdhid'
-    app.config['SESSION_TYPE'] = 'filesystem'
-    Session(app)
-    app.run("0.0.0.0", 5000)
+    os.environ["OPENAI_API_KEY"] = "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"
+    iface = gr.Interface(fn=make_query,
+                         inputs=gr.components.Textbox(lines=7, placeholder="Enter your question here"),
+                         outputs="text",
+                         title="Chat-chatan test",
+                         description="Chat tentang 'fifth discipline'",
+                         )
+    iface.launch(share=True)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
