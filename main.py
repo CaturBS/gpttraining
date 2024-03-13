@@ -19,6 +19,7 @@ class ConversationFactory:
             embeddings = OpenAIEmbeddings()
             vectordb = Chroma(persist_directory=os.path.join(os.getcwd(), "chroma_db"), embedding_function=embeddings)
             ConversationFactory.__conversation = ConversationalRetrievalChain.from_llm(
+
                 ChatOpenAI(temperature=0.6,model_name="gpt-3.5-turbo-16k",max_tokens=800),
                 vectordb.as_retriever(),
                 max_tokens_limit=6400,
@@ -50,11 +51,19 @@ if __name__ == '__main__':
     #                      description="Chat tentang 'fifth discipline'",
     #                      )
     # iface.launch(share=False,server_name="0.0.0.0", server_port=5000)
+<<<<<<< HEAD
     chat_iface = gr.ChatInterface(
+=======
+    chatface = gr.ChatInterface(
+>>>>>>> c02839c9513c1283a64b965e6281d8c219f5eb8a
         title="Chat-chatan test",
         description="Chat tentang 'fifth discipline'",
         fn=make_query
     )
+<<<<<<< HEAD
     chat_iface.launch(share=False, server_name="0.0.0.0", server_port=5000)
+=======
+    chatface.launch(share=False,server_name="0.0.0.0", server_port=5000)
+>>>>>>> c02839c9513c1283a64b965e6281d8c219f5eb8a
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
