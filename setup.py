@@ -7,7 +7,7 @@ import os
 
 
 def __init_index():
-    os.environ["OPENAI_API_KEY"] = "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"
+    os.environ["OPENAI_API_KEY"] = "xxx"
     pdf_file = os.path.join(os.getcwd(), "docs", "5discp.pdf")
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=4000, chunk_overlap=200)
     docs = PyPDFLoader(file_path=pdf_file).load_and_split(text_splitter=text_splitter)
