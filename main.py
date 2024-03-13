@@ -1,60 +1,42 @@
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, StorageContext, load_index_from_storage
-from langchain.chains import ConversationalRetrievalChain
-from langchain.chat_models import ChatOpenAI
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.vectorstores import Chroma
-from langchain.memory import ConversationBufferWindowMemory
+
 import os
 import gradio as gr
-import random
+
+
+def __init_index(directory_path):
+    PERSIST_DIR = "./storage"
+    if not os.path.exists(PERSIST_DIR):
+        # load the documents and create the index
+        documents = SimpleDirectoryReader(directory_path).load_data()
+        result = VectorStoreIndex.from_documents(documents)
+        # store it for later
+        result.storage_context.persist(persist_dir=PERSIST_DIR)
+    else:
+        # load the existing index
+        storage_context = StorageContext.from_defaults(persist_dir=PERSIST_DIR)
+        result = load_index_from_storage(storage_context)
+    return result
 
 
 
-class ConversationFactory:
-    __conversation = None
+def make_query(text:str):
+    docpath = os.path.join(os.getcwd(), "docs")
+    vec_index = __init_index(docpath)
+    query_engine = vec_index.as_query_engine()
+    response = query_engine.query(text)
+    print(response)
+    return str(response)
 
-    @staticmethod
-    def get_conversation():
-        if ConversationFactory.__conversation is None:
-            embeddings = OpenAIEmbeddings()
-            vectordb = Chroma(persist_directory=os.path.join(os.getcwd(), "chroma_db"), embedding_function=embeddings)
-            ConversationFactory.__conversation = ConversationalRetrievalChain.from_llm(
-                ChatOpenAI(temperature=0.7,model_name="gpt-3.5-turbo-16k",max_tokens=800),
-                vectordb.as_retriever(),
-                max_tokens_limit=6400,
-                return_source_documents=True,
-                verbose=True,
-            )
-        return ConversationFactory.__conversation
-
-
-
-def make_query(message, history):
-    memory = ConversationBufferWindowMemory(
-        k=4
-    )
-    memory.chat_memory.clear()
-    for hist in history:
-        memory.chat_memory.add_user_message(hist[0])
-        memory.chat_memory.add_ai_message(hist[0])
-    conversation = ConversationFactory.get_conversation()
-    result = conversation({"question": message, "chat_history": memory.chat_memory.messages})
-    return result['answer']
 
 if __name__ == '__main__':
-    # os.environ["OPENAI_API_KEY"] = "_open_ai_key"
-    # iface = gr.Interface(fn=make_query,
-    #                      inputs=[gr.components.Textbox(lines=7, placeholder="Enter your question here")],
-    #                      outputs=["text", gr.components.Highlight()],
-    #                      title="Chat-chatan test",
-    #                      description="Chat tentang 'fifth discipline'",
-    #                      )
-    # iface.launch(share=False,server_name="0.0.0.0", server_port=5000)
-    chatface = gr.ChatInterface(
-        title="Chat-chatan test",
-        description="Chat tentang 'fifth discipline'",
-        fn=make_query
-    )
-    chatface.launch(share=False,server_name="0.0.0.0", server_port=5000)
+    os.environ["OPENAI_API_KEY"] = "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"
+    iface = gr.Interface(fn=make_query,
+                         inputs=gr.components.Textbox(lines=7, placeholder="Enter your question here"),
+                         outputs="text",
+                         title="Chat-chatan test",
+                         description="Chat tentang 'fifth discipline'",
+                         )
+    iface.launch(share=False, server_port=5000)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
