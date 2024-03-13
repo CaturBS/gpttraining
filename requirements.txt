@@ -1,3 +1,6 @@
-Flask==3.0.2
-flask_session==0.6.0
-llama_index==0.10.12
+langchain~=0.1.12
+gradio~=4.21.0
+pypdf~=4.1.0
+openai~=1.13.3
+tiktoken~=0.6.0
+chromadb~=0.4.24-
