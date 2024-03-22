@@ -6,8 +6,9 @@ from langchain.vectorstores import Chroma
 from langchain.memory import ConversationBufferWindowMemory
 import os
 import gradio as gr
-import random
+from fastapi import FastAPI
 
+app = FastAPI()
 
 
 class ConversationFactory:
@@ -36,10 +37,13 @@ def make_query(message, history):
     )
     memory.chat_memory.clear()
     for hist in history:
+        print('hist')
+        print(hist)
         memory.chat_memory.add_user_message(hist[0])
         memory.chat_memory.add_ai_message(hist[0])
     conversation = ConversationFactory.get_conversation()
     result = conversation({"question": message, "chat_history": memory.chat_memory.messages})
+    print(result)
     return result['answer']
 
 if __name__ == '__main__':
@@ -51,19 +55,15 @@ if __name__ == '__main__':
     #                      description="Chat tentang 'fifth discipline'",
     #                      )
     # iface.launch(share=False,server_name="0.0.0.0", server_port=5000)
-<<<<<<< HEAD
     chat_iface = gr.ChatInterface(
-=======
-    chatface = gr.ChatInterface(
->>>>>>> c02839c9513c1283a64b965e6281d8c219f5eb8a
         title="Chat-chatan test",
         description="Chat tentang 'fifth discipline'",
         fn=make_query
     )
-<<<<<<< HEAD
+
     chat_iface.launch(share=False, server_name="0.0.0.0", server_port=5000)
-=======
-    chatface.launch(share=False,server_name="0.0.0.0", server_port=5000)
->>>>>>> c02839c9513c1283a64b965e6281d8c219f5eb8a
+
+
+
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
