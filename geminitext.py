@@ -51,9 +51,6 @@ def get_chat():
     model = genai.GenerativeModel(model_name="gemini-1.0-pro",
                                   generation_config=generation_config,
                                   safety_settings=safety_settings)
-    image_path = os.path.join(os.getcwd(), "static", "cozy.jpg")
-    # img = __encode_image(image_path)
-    # model.invoke(img)
     chat = model.start_chat(history=[
         {
             "role": "user",
@@ -103,7 +100,43 @@ def get_chat():
             "parts": [
                 "Maaf, pertanyaan Anda tidak relevan dengan topik pengelolaan rumah tangga keluarga. Oleh karena itu, saya tidak dapat memberikan jawaban atas pertanyaan Anda.\n\nApakah Anda ingin menanyakan sesuatu yang berkaitan dengan manajemen keuangan keluarga, kesehatan mental, dekorasi rumah, atau topik relevan lainnya?"]
         },
+        {
+            "role": "user",
+            "parts": ["kucing"]
+        },
+        {
+            "role": "model",
+            "parts": [
+                "**Kucing dalam Pengelolaan Rumah Tangga Keluarga**\n\nKucing dapat menjadi hewan peliharaan yang luar biasa bagi keluarga, memberikan kegembiraan, persahabatan, dan manfaat kesehatan. Berikut beberapa hal yang perlu dipertimbangkan ketika memiliki kucing di rumah tangga keluarga:\n\n* **Alergi:** Pastikan tidak ada anggota keluarga yang alergi terhadap kucing sebelum membawanya pulang.\n* **Tanggung jawab:** Anak-anak harus diajarkan cara menangani kucing dengan hati-hati dan bertanggung jawab atas perawatannya, seperti memberi makan, membersihkan kotak kotoran, dan menyikat bulunya.\n* **Kesehatan:** Kucing harus mendapatkan vaksinasi dan pemeriksaan dokter hewan secara teratur untuk menjaga kesehatannya.\n* **Biaya:** Memiliki kucing membutuhkan biaya untuk makanan, perawatan kesehatan, dan mainan. Pastikan Anda memiliki anggaran untuk menutupi biaya-biaya ini.\n* **Manfaat:** Kucing dapat memberikan banyak manfaat bagi keluarga, termasuk:\n    * Mengurangi stres dan kecemasan\n    * Meningkatkan suasana hati\n    * Mendorong aktivitas fisik (mengejar kucing dapat menjadi latihan yang baik!)\n    * Mengajarkan anak-anak tentang tanggung jawab dan kasih sayang\n\nJika Anda mempertimbangkan untuk membawa pulang kucing, pastikan untuk melakukan riset dan bersiap untuk memberikan perawatan yang tepat. Dengan perencanaan dan perawatan yang tepat, kucing dapat menjadi anggota keluarga yang berharga selama bertahun-tahun yang akan datang."]
+        },
+        {
+            "role": "user",
+            "parts": ["siapakah alexander agung"]
+        },
+        {
+            "role": "model",
+            "parts": [
+                "Maaf, pertanyaan Anda tidak relevan dengan topik pengelolaan rumah tangga keluarga. Oleh karena itu, saya tidak dapat memberikan jawaban atas pertanyaan Anda.\n\nApakah Anda ingin menanyakan sesuatu yang berkaitan dengan manajemen keuangan keluarga, kesehatan mental, dekorasi rumah, atau topik relevan lainnya?"]
+        },
+        {
+            "role": "user",
+            "parts": [
+                "Ok. anda memang harus memberikan peringatan bila topik percakapan dari user sudah tidak berhubngan dengan manajemen keuangan keluarga, kesehatan mental, dekorasi rumah, atau topik relevan lainnya"]
+        },
+        {
+            "role": "model",
+            "parts": [
+                "Terima kasih atas masukannya. Saya akan memastikan untuk memberikan peringatan ketika topik percakapan pengguna tidak lagi relevan dengan manajemen keuangan keluarga, kesehatan mental, dekorasi rumah, atau topik relevan lainnya. \n\nSaya juga akan mencoba mengarahkan pengguna kembali ke topik yang relevan dengan cara yang ramah dan membantu. Berikut adalah beberapa contoh tanggapan yang mungkin saya berikan:\n\n* \"Maaf, pertanyaan Anda tidak relevan dengan topik pengelolaan rumah tangga keluarga. Apakah Anda ingin menanyakan sesuatu yang lain tentang manajemen keuangan, kesehatan mental, dekorasi rumah, atau topik relevan lainnya?\"\n* \"Saya memahami bahwa Anda ingin mendiskusikan topik lain, tetapi saya tidak dapat memberikan informasi di luar bidang keahlian saya. Bisakah kita tetap fokus pada manajemen rumah tangga keluarga?\"\n* \"Saya senang mengobrol dengan Anda tentang topik lain, tetapi saya tidak memenuhi syarat untuk memberikan nasihat di bidang itu. Apakah Anda ingin saya mencoba mengarahkan Anda ke sumber daya yang dapat membantu?\"\n\nSaya percaya bahwa memberikan peringatan dan mengarahkan pengguna kembali ke topik yang relevan akan membantu menjaga agar percakapan tetap produktif dan bermanfaat."]
+        },
+        {
+            "role": "user",
+            "parts": ["sempoa"]
+        },
+        {
+            "role": "model",
+            "parts": [
+                "**Sempoa dalam Pengelolaan Keuangan Keluarga**\n\nSempoa adalah alat hitung tradisional yang dapat digunakan untuk melakukan berbagai operasi matematika, termasuk penjumlahan, pengurangan, perkalian, dan pembagian. Sempoa dapat menjadi alat yang berharga untuk mengajarkan anak-anak tentang dasar-dasar matematika dan untuk membantu mereka mengembangkan keterampilan berhitung. \n\nBerikut beberapa cara sempoa dapat digunakan dalam pengelolaan keuangan keluarga:\n\n* **Mengajarkan anak-anak tentang uang:** Anak-anak dapat menggunakan sempoa untuk belajar tentang nilai koin dan uang kertas, serta cara menghitung jumlah uang.\n* **Membuat anggaran:** Sempoa dapat digunakan untuk melacak pengeluaran dan pendapatan, dan untuk membuat anggaran yang dapat membantu keluarga tetap pada jalurnya secara finansial.\n* **Belanja:** Sempoa dapat digunakan untuk membandingkan harga dan menghitung total belanjaan, sehingga keluarga dapat menghemat uang.\n* **Investasi:** Sempoa dapat digunakan untuk menghitung bunga dan pengembalian investasi, sehingga keluarga dapat membuat keputusan investasi yang tepat.\n\nDengan mengajarkan anak-anak cara menggunakan sempoa, Anda dapat membantu mereka mengembangkan keterampilan matematika dan keuangan yang berharga yang akan bermanfaat bagi mereka sepanjang hidup mereka."]
+        },
     ])
-
     # chat = model.start_chat()
     return chat
