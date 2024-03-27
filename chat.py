@@ -24,7 +24,8 @@ if __name__ == '__main__':
             'About': "# This is a header. This is an *extremely* cool app!"
         }
     )
-
+    st.title("Rumah Harmoni")
+    st.code("author: ctrbudisantoso@gmail.com")
     with st.chat_message("assistant"):
         st.markdown(
             '<img src="./app/static/cozy.jpg" height="150" style="border: 1px solid orange">',
