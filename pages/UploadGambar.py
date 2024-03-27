@@ -10,10 +10,19 @@ uploaded_file = st.file_uploader("Upload foto kamar, toilet, teras di rumah atau
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
 
-    txt = geminichat.get_conversation(image)
-    st.image(
+    response_body = geminichat.get_conversation(image)
+    img = st.image(
         image,
         caption=f"You amazing image has shape",
         use_column_width=True,
     )
+    txt = str(response_body.parts[0].text)
     st.write(txt)
+
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+
+    st.session_state.messages.append({"role": "user", "content": image, "type": "image"})
+    st.session_state.messages.append({"role": "assistant", "content": txt, "type": "text"})
+
+    st.page_link('chat.py', label="Kembali ke chat", icon="👆")

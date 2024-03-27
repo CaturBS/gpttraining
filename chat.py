@@ -40,12 +40,22 @@ if __name__ == '__main__':
         st.session_state.chat = geminitext.get_chat()
         response_body = st.session_state.chat.send_message("Rumah Harmoni tolong sapa user dan beri deskripsi tentang anda. Serta persilahkan user untuk menggunakan fasilitas chat dari anda.")
         resp = response_body.parts[0].text
-        st.session_state.messages.append({"role": "assistant", "content": resp})
+        st.session_state.messages.append({"role": "assistant", "content": resp, "type":"text"})
 
 
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
-            st.markdown(message["content"])
+            if "type" in message:
+                if message["type"] == "image":
+                    st.image(
+                        message["content"],
+                        caption=f"Foto dari user",
+                        use_column_width=True,
+                    )
+                else:
+                    st.markdown(message["content"])
+            else:
+                st.markdown(message["content"])
 
 
     prompt = st.chat_input("Chat disini")
@@ -57,11 +67,11 @@ if __name__ == '__main__':
         with st.chat_message("assistant"):
             st.markdown(response)
             # st.write_stream(_get_stream(response))
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        st.session_state.messages.append({"role": "assistant", "content": response})
+        st.session_state.messages.append({"role": "user", "content": prompt, type:"text"})
+        st.session_state.messages.append({"role": "assistant", "content": response, type:"text"})
 
 
 
     with st.chat_message("assistant"):
-        st.write("Anda bisa upload gambar atau ambil foto kamar, teras di rumah untuk mendapatkan saran-saran dari saya.")
+        st.write("Anda bisa upload foto kamar, toilet atau teras di rumah untuk mendapatkan saran-saran dari saya.")
         st.page_link('pages/UploadGambar.py', label="Klik Upload Gambar",icon="👆")
