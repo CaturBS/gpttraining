@@ -1,6 +1,7 @@
 import time
 import streamlit as st
 import geminitext
+import streamlit.components.v1 as components
 
 
 # import os
@@ -29,6 +30,11 @@ if __name__ == '__main__':
             '<img src="./app/static/cozy.jpg" height="150" style="border: 1px solid orange">',
             unsafe_allow_html=True,
         )
+        url = "/UploadGambar"
+        st.link_button("Upload Gambar", url=url)
+        st.page_link('pages/UploadGambar.py', label="Upload Gambar")
+        # st.write("Upload Gambar [link](%s)" % url)
+        # st.markdown("Upload Gambar [link](%s)" % url)
 
     # Initialize chat history
     if "messages" not in st.session_state:
@@ -36,7 +42,7 @@ if __name__ == '__main__':
 
     if "chat" not in st.session_state:
         st.session_state.chat = geminitext.get_chat()
-        response_body = st.session_state.chat.send_message("Rumah Harmoni tolong beri sapa user dan deskripsi tentang anda. Serta persilahkan user untuk menggunakan fasilitas chat dari anda.")
+        response_body = st.session_state.chat.send_message("Rumah Harmoni tolong sapa user dan beri deskripsi singkat tentang anda. Serta persilahkan user untuk menggunakan fasilitas chat dari anda.")
         resp = response_body.parts[0].text
         st.session_state.messages.append({"role": "assistant", "content": resp})
 
@@ -49,9 +55,10 @@ if __name__ == '__main__':
         with st.chat_message("user"):
             st.write(f"{prompt}")
         response_body = st.session_state.chat.send_message(prompt)
-        response = response_body.parts[0].text
+        response = str(response_body.parts[0].text)
         with st.chat_message("assistant"):
             st.markdown(response)
             # st.write_stream(_get_stream(response))
         st.session_state.messages.append({"role": "user", "content": prompt})
         st.session_state.messages.append({"role": "assistant", "content": response})
+
