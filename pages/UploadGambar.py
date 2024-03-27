@@ -25,4 +25,4 @@ if uploaded_file is not None:
     st.session_state.messages.append({"role": "user", "content": image, "type": "image"})
     st.session_state.messages.append({"role": "assistant", "content": txt, "type": "text"})
 
-    st.page_link('chat.py', label="Kembali ke chat", icon="👆")
+    st.page_link('chat.py', label="Klik disini untuk kembali ke chat", icon="👆")

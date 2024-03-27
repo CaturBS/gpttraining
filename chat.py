@@ -75,4 +75,4 @@ if __name__ == '__main__':
 
     with st.chat_message("assistant"):
         st.write("Anda bisa upload foto kamar, toilet atau teras di rumah untuk mendapatkan saran-saran dari saya.")
-        st.page_link('pages/UploadGambar.py', label="Klik Upload Gambar",icon="👆")
+        st.page_link('pages/UploadGambar.py', label="Klik disini untuk meng-upload gambar",icon="👆")
