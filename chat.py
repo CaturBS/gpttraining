@@ -8,9 +8,9 @@ import streamlit.components.v1 as components
 
 
 def _get_stream(text):
-    for word in text.split():
+    for word in text.split(" "):
         yield word + " "
-        time.sleep(0.1)
+        time.sleep(0.05)
 
 
 if __name__ == '__main__':
@@ -41,22 +41,24 @@ if __name__ == '__main__':
         st.session_state.chat = geminitext.get_chat()
         response_body = st.session_state.chat.send_message("Rumah Harmoni tolong sapa user dan beri deskripsi tentang anda. Serta persilahkan user untuk menggunakan fasilitas chat dari anda.")
         resp = response_body.parts[0].text
+        st.write_stream(_get_stream(resp))
         st.session_state.messages.append({"role": "assistant", "content": resp, "type":"text"})
-
-
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            if "type" in message:
-                if message["type"] == "image":
-                    st.image(
-                        message["content"],
-                        caption=f"Foto dari user",
-                        use_column_width=True,
-                    )
+    else:
+        for message in st.session_state.messages:
+            with st.chat_message(message["role"]):
+                if "type" in message:
+                    if message["type"] == "image":
+                        st.image(
+                            message["content"],
+                            caption=f"Foto dari user",
+                            use_column_width=True,
+                        )
+                    else:
+                        # st.write_stream(_get_stream(message["content"]))
+                        st.markdown(message["content"])
                 else:
+                    # st.write_stream(_get_stream(message["content"]))
                     st.markdown(message["content"])
-            else:
-                st.markdown(message["content"])
 
 
     prompt = st.chat_input("Chat disini")
@@ -66,8 +68,8 @@ if __name__ == '__main__':
         response_body = st.session_state.chat.send_message(prompt)
         response = str(response_body.parts[0].text)
         with st.chat_message("assistant"):
-            st.markdown(response)
-            # st.write_stream(_get_stream(response))
+            # st.markdown(response)
+            st.write_stream(_get_stream(response))
         st.session_state.messages.append({"role": "user", "content": prompt, type:"text"})
         st.session_state.messages.append({"role": "assistant", "content": response, type:"text"})
 
