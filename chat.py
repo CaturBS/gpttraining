@@ -30,27 +30,25 @@ if __name__ == '__main__':
             '<img src="./app/static/cozy.jpg" height="150" style="border: 1px solid orange">',
             unsafe_allow_html=True,
         )
-        url = "/UploadGambar"
-        st.link_button("Upload Gambar", url=url)
-        st.page_link('pages/UploadGambar.py', label="Upload Gambar")
         # st.write("Upload Gambar [link](%s)" % url)
         # st.markdown("Upload Gambar [link](%s)" % url)
-
     # Initialize chat history
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
     if "chat" not in st.session_state:
         st.session_state.chat = geminitext.get_chat()
-        response_body = st.session_state.chat.send_message("Rumah Harmoni tolong sapa user dan beri deskripsi singkat tentang anda. Serta persilahkan user untuk menggunakan fasilitas chat dari anda.")
+        response_body = st.session_state.chat.send_message("Rumah Harmoni tolong sapa user dan beri deskripsi tentang anda. Serta persilahkan user untuk menggunakan fasilitas chat dari anda.")
         resp = response_body.parts[0].text
         st.session_state.messages.append({"role": "assistant", "content": resp})
+
 
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-    prompt = st.chat_input("Say something")
+
+    prompt = st.chat_input("Chat disini")
     if prompt:
         with st.chat_message("user"):
             st.write(f"{prompt}")
@@ -62,3 +60,8 @@ if __name__ == '__main__':
         st.session_state.messages.append({"role": "user", "content": prompt})
         st.session_state.messages.append({"role": "assistant", "content": response})
 
+
+
+    with st.chat_message("assistant"):
+        st.write("Anda bisa upload gambar atau ambil foto kamar, teras di rumah untuk mendapatkan saran-saran dari saya.")
+        st.page_link('pages/UploadGambar.py', label="Klik Upload Gambar",icon="👆")
