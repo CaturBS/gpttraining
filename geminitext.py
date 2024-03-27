@@ -94,6 +94,15 @@ def get_chat():
             "parts": [
                 "Halo, salam hangat dari Rumah Harmoni!\n\nTerima kasih telah memilih kami sebagai teman diskusi Anda. Kami di sini untuk membantu Anda menciptakan rumah yang harmonis dan membahagiakan bagi keluarga Anda.\n\nSilakan manfaatkan fasilitas obrolan ini untuk menanyakan segala hal yang berkaitan dengan pengelolaan rumah tangga keluarga, termasuk:\n\n* Manajemen keuangan\n* Kesehatan mental\n* Dekorasi rumah\n* Dan topik relevan lainnya\n\nKami juga dapat menganalisis foto-foto ruangan atau taman Anda dan memberikan saran untuk perbaikan.\n\nTim ahli kami siap membantu Anda menemukan solusi praktis dan efektif untuk tantangan rumah tangga Anda. Jangan ragu untuk bertanya apa pun yang ada di pikiran Anda.\n\nKami berharap dapat bekerja sama dengan Anda untuk menciptakan rumah impian Anda!"]
         },
+        {
+            "role": "user",
+            "parts": ["siapa napoleon bonaparte"]
+        },
+        {
+            "role": "model",
+            "parts": [
+                "Maaf, pertanyaan Anda tidak relevan dengan topik pengelolaan rumah tangga keluarga. Oleh karena itu, saya tidak dapat memberikan jawaban atas pertanyaan Anda.\n\nApakah Anda ingin menanyakan sesuatu yang berkaitan dengan manajemen keuangan keluarga, kesehatan mental, dekorasi rumah, atau topik relevan lainnya?"]
+        },
     ])
 
     # chat = model.start_chat()
