@@ -19,13 +19,13 @@ if __name__ == '__main__':
         page_icon="👋",
         layout="wide",
         menu_items={
-            'Get Help': 'https://www.extremelycoolapp.com/help',
-            'Report a bug': "https://www.extremelycoolapp.com/bug",
+            'Get Help': 'http://www.rumahharmoni.my.id/help',
+            'Report a bug': "http://www.rumahharmoni.my.id//bug",
             'About': "# This is a header. This is an *extremely* cool app!"
         }
     )
     st.title("Rumah Harmoni")
-    st.code("author: ctrbudisantoso@gmail.com")
+    st.code("author: ctrbudisantoso@gmail.com\npage: http://www.rumahharmoni.my.id/")
     with st.chat_message("assistant"):
         st.markdown(
             '<img src="./app/static/cozy.jpg" height="150" style="border: 1px solid orange">',
