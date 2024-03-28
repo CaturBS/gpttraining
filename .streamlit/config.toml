@@ -1,6 +1,6 @@
 [server]
 enableStaticServing = true
-port = 5000
+port = 443
 sslCertFile = '/etc/ssl/certs/apache-selfsigned.crt'
 sslKeyFile = '/etc/ssl/private/apache-selfsigned.key'
 
