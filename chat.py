@@ -1,11 +1,47 @@
+import logging
 import time
 import streamlit as st
 import geminitext
+from streamlit import runtime
+from streamlit.runtime.scriptrunner import get_script_run_ctx
 import streamlit.components.v1 as components
 
 
 # import os
 
+def get_remote_ip():
+    print("ctx")
+    try:
+        ctx = get_script_run_ctx()
+        print(ctx)
+        if ctx is None:
+            return None
+        session_info = runtime.get_instance().get_client(ctx.session_id)
+        print(session_info)
+        if session_info is None:
+            return None
+
+        return session_info.request.remote_ip
+    except Exception as e:
+        return None
+
+
+class ContextFilter(logging.Filter):
+    def filter(self, record):
+        record.user_ip = get_remote_ip()
+        return super().filter(record)
+def init_logging():
+    logger = logging.getLogger("streamlitlogger")
+    if logger.handlers:
+        return
+    logger.propagate = False
+    logger.setLevel(logging.INFO)
+    formatter = logging.Formatter("%(name)s %(asctime)s %(levelname)s [user_ip=%(user_ip)s] - %(message)s")
+    handler = logging.StreamHandler()
+    handler.setLevel(logging.INFO)
+    handler.addFilter(ContextFilter())
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
 
 def _get_stream(text):
     for word in text.split(" "):
@@ -24,7 +60,11 @@ if __name__ == '__main__':
             'About': "# This is a header. This is an *extremely* cool app!"
         }
     )
+    init_logging()
+
+    logger = logging.getLogger("streamlitlogger")
     st.title("Rumah Harmoni")
+    logger.info("remoteip:\t"+get_remote_ip())
     st.code("author: ctrbudisantoso@gmail.com\npage: http://www.rumahharmoni.my.id/")
     with st.chat_message("assistant"):
         st.markdown(
