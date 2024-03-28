@@ -1,4 +1,5 @@
 import logging
+import os
 import time
 import streamlit as st
 import geminitext
@@ -10,14 +11,11 @@ import streamlit.components.v1 as components
 # import os
 
 def get_remote_ip():
-    print("ctx")
     try:
         ctx = get_script_run_ctx()
-        print(ctx)
         if ctx is None:
             return None
         session_info = runtime.get_instance().get_client(ctx.session_id)
-        print(session_info)
         if session_info is None:
             return None
 
@@ -37,7 +35,7 @@ def init_logging():
     logger.propagate = False
     logger.setLevel(logging.INFO)
     formatter = logging.Formatter("%(name)s %(asctime)s %(levelname)s [user_ip=%(user_ip)s] - %(message)s")
-    handler = logging.StreamHandler()
+    handler = logging.FileHandler(os.path.join(os.getcwd(),"logger.log"))
     handler.setLevel(logging.INFO)
     handler.addFilter(ContextFilter())
     handler.setFormatter(formatter)
