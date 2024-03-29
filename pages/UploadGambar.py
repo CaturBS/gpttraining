@@ -16,13 +16,17 @@ if uploaded_file is not None:
         caption=f"You amazing image has shape",
         use_column_width=True,
     )
-    txt = str(response_body.parts[0].text)
-    st.write(txt)
+    try:
+        txt = str(response_body.parts[0].text)
+        st.write(txt)
 
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
+        if "messages" not in st.session_state:
+            st.session_state.messages = []
 
-    st.session_state.messages.append({"role": "user", "content": image, "type": "image"})
-    st.session_state.messages.append({"role": "assistant", "content": txt, "type": "text"})
+        st.session_state.messages.append({"role": "user", "content": image, "type": "image"})
+        st.session_state.messages.append({"role": "assistant", "content": txt, "type": "text"})
+    except:
+        st.markdown("Maaf terjadi gangguan dalam proses analisa image. Coba gunakan browser firefox di pc.")
+        st.code(response_body)
 
     st.page_link('chat.py', label="Klik disini untuk kembali ke chat", icon="👆")
